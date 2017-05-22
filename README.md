@@ -97,7 +97,7 @@ Suppose you are familiar with ROS and you can get a camera and an IMU with raw m
 
 4. Other parameter settings: Details are included in the config file.
 
-5. Device Performance: (global shutter camera + synchronized high-end IMU, e.g. VI-Sensor) > (global shutter camera + synchronized low-end IMU, e.g. camera+DJI Flight controller) ? (global camera + unsync high frequency IMU) > (global camera + unsync low frequency IMU) > (rolling camera + unsync low frequency IMU). **DO NOT** start with a rolling shutter camera and unsync IMU (such as DJI M100 + Logitech web camera) at beginning. 
+5. Performance on different devices: (global shutter camera + synchronized high-end IMU, e.g. VI-Sensor) > (global shutter camera + synchronized low-end IMU, e.g. camera+DJI A3) > (global camera + unsync high frequency IMU) > (global camera + unsync low frequency IMU) > (rolling camera + unsync low frequency IMU). **DO NOT** start with a rolling shutter camera and unsync IMU (such as DJI M100 + Logitech web camera) at beginning. 
 
 
 ## 6. Acknowledgements
