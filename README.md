@@ -53,31 +53,31 @@ Clone the repository and catkin_make:
 ```
 
 ## 3. Performance on EuRoC dataset
-1. Download [EuRoC MAV Dataset](http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets). Although it contains stereo cameras, we only use one camera.
+1.Download [EuRoC MAV Dataset](http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets). Although it contains stereo cameras, we only use one camera.
 
-2. Open three terminals, launch the vins_estimator , rviz and play the bag file respectively. Take MH_05 as example
+2.Open three terminals, launch the vins_estimator , rviz and play the bag file respectively. Take MH_05 as example
 ```
     roslaunch vins_estimator euroc.launch 
     roslaunch vins_estimator vins_rviz.launch
     rosbag play YOUR_PATH_TO_DATASET/MH_05_difficult.bag 
 ```
 
-3. (Optional) Visualize ground truth. We write a naive benchmark publisher to help you visualize the ground truth. It uses a naive strategy to align VINS with ground truth. Just for visualization. not for quantitative comparison on academic publications.
+3.(Optional) Visualize ground truth. We write a naive benchmark publisher to help you visualize the ground truth. It uses a naive strategy to align VINS with ground truth. Just for visualization. not for quantitative comparison on academic publications.
 ```
     roslaunch benchmark_publisher publish.launch  sequence_name:=MH_05_difficult
 ```
  (Green line is VINS result, red line is ground truth). 
  
-4. (Optional) You can even run EuRoC **without extrinsic parameters** between camera and IMU. We will calibrate them online. Replace the first command with:
+4.(Optional) You can even run EuRoC **without extrinsic parameters** between camera and IMU. We will calibrate them online. Replace the first command with:
 ```
     roslaunch vins_estimator euroc_no_extrinsic_param.launch
 ```
 **No extrinsic parameters** in that config file.  Waiting a few seconds for initial calibration. Sometimes you cannot feel any difference as the calibration is done quickly.
 
 ## 4. AR Demo
-1. Download the [bag file](https://www.dropbox.com/s/s29oygyhwmllw9k/ar_box.bag?dl=0), which is collected from HKUST Robotic Institute. For friends in mainland China, download from [bag file](https://pan.baidu.com/s/1geEyHNl).
+1.Download the [bag file](https://www.dropbox.com/s/s29oygyhwmllw9k/ar_box.bag?dl=0), which is collected from HKUST Robotic Institute. For friends in mainland China, download from [bag file](https://pan.baidu.com/s/1geEyHNl).
 
-2. Open three terminals, launch the ar_demo, rviz and play the bag file respectively.
+2.Open three terminals, launch the ar_demo, rviz and play the bag file respectively.
 ```
     roslaunch ar_demo 3dm_bag.launch
     roslaunch ar_demo ar_rviz.launch
@@ -87,15 +87,16 @@ We put one 0.8m x 0.8m x 0.8m virtual box in front of your view.
 
 ## 5. Run with your device 
 
-Suppose you are familiar with ROS and you can get a camera and raw IMU (around 9.8m/s2) in ROS topic, you can follow these steps to set up your device. For beginners, we highly recommend you to try the [VINS-Mobile](https://github.com/HKUST-Aerial-Robotics/VINS-Mobile) if you have iOS devices since you don't need to set up anything.
+Suppose you are familiar with ROS and you can get a camera and an IMU with raw metric measurements in ROS topic, you can follow these steps to set up your device. For beginners, we highly recommend you to first try out [VINS-Mobile](https://github.com/HKUST-Aerial-Robotics/VINS-Mobile) if you have iOS devices since you don't need to set up anything.
 
 1. Change to your topic name in the config file.
 
-2. Camera calibration.  We support PINHOLE model and  [MEI model](http://www.robots.ox.ac.uk/~cmei/articles/single_viewpoint_calib_mei_07.pdf). You can calibrate your camera with any tools you like. Just write the parameters in the config file in the right format.
+2. Camera calibration.  We support the PINHOLE model and the [MEI model](http://www.robots.ox.ac.uk/~cmei/articles/single_viewpoint_calib_mei_07.pdf). You can calibrate your camera with any tools you like. Just write the parameters in the config file in the right format.
 
 3. Camera-Imu extrinsic parameters. 
-If you have seen the euroc and ar_demo config file, you can find that we just use coarse values. If you familiar with transformation, you can figure out the rotation and position by your eyes. And then write these values into config as the initial guess. 
-If you don't know anything about transformation, just ignore the extrinsic parameters and set the **estimate_extrinsic** to **2**, and rotate your device set at the beginning for a few seconds. When the system works successfully, we will save the calibration result. you can use these result as initial values for next time.
+
+If you have seen the config files for EuRoC and AR demos, you can find that we just use coarse values. If you familiar with transformation, you can figure out the rotation and position by your eyes or via hand measuerments. Then write these values into config as the initial guess. Our estimator will refine extrinsic parameters online.
+If you don't know anything about the camera-IMU transformation, just ignore the extrinsic parameters and set the **estimate_extrinsic** to **2**, and rotate your device set at the beginning for a few seconds. When the system works successfully, we will save the calibration result. you can use these result as initial values for next time.
 
 4. Other parameters setting. Details are included in the config file.
 
