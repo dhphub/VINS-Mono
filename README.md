@@ -91,17 +91,13 @@ Suppose you are familiar with ROS and you can get a camera and an IMU with raw m
 
 1. Change to your topic name in the config file.
 
-2. Camera calibration.  We support the PINHOLE model and the [MEI model](http://www.robots.ox.ac.uk/~cmei/articles/single_viewpoint_calib_mei_07.pdf). You can calibrate your camera with any tools you like. Just write the parameters in the config file in the right format.
+2. Camera calibration: We support the PINHOLE model and the [MEI model](http://www.robots.ox.ac.uk/~cmei/articles/single_viewpoint_calib_mei_07.pdf). You can calibrate your camera with any tools you like. Just write the parameters in the config file in the right format.
 
-3. Camera-Imu extrinsic parameters. 
+3. Camera-Imu extrinsic parameters: If you have seen the config files for EuRoC and AR demos, you can find that we just use coarse values. If you familiar with transformation, you can figure out the rotation and position by your eyes or via hand measuerments. Then write these values into config as the initial guess. Our estimator will refine extrinsic parameters online. If you don't know anything about the camera-IMU transformation, just ignore the extrinsic parameters and set the **estimate_extrinsic** to **2**, and rotate your device set at the beginning for a few seconds. When the system works successfully, we will save the calibration result. you can use these result as initial values for next time.
 
-If you have seen the config files for EuRoC and AR demos, you can find that we just use coarse values. If you familiar with transformation, you can figure out the rotation and position by your eyes or via hand measuerments. Then write these values into config as the initial guess. Our estimator will refine extrinsic parameters online.
-If you don't know anything about the camera-IMU transformation, just ignore the extrinsic parameters and set the **estimate_extrinsic** to **2**, and rotate your device set at the beginning for a few seconds. When the system works successfully, we will save the calibration result. you can use these result as initial values for next time.
+4. Other parameter settings: Details are included in the config file.
 
-4. Other parameters setting. Details are included in the config file.
-
-Device Performance: VI-sensor (global shutter camera + synchronized IMU) > (global camera + unsync high frec IMU) > (global camera + low IMU) > (rolling camera + low IMU).
-Don't start with rolling shutter camera with low IMU (such as DJI M100 + Logitech web camera) at beginning. 
+5. Device Performance: (global shutter camera + synchronized high-end IMU, e.g. VI-Sensor) > (global shutter camera + synchronized low-end IMU, e.g. camera+DJI Flight controller) ? (global camera + unsync high frequency IMU) > (global camera + unsync low frequency IMU) > (rolling camera + unsync low frequency IMU). **DO NOT** start with a rolling shutter camera and unsync IMU (such as DJI M100 + Logitech web camera) at beginning. 
 
 
 ## 6. Acknowledgements
